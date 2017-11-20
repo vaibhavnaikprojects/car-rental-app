@@ -140,14 +140,14 @@ $(document).ready(function () {
 			}
 		});
 	$.ajax({
-		url:'cars',
+		url:'cars?filter=available',
 		type:'get',
 		success: function(gridData){
 			$("#carjqGrid").jqGrid('setGridParam', { data: gridData}).trigger('reloadGrid');
 		}
 	});
 	$.ajax({
-		url:'customers',
+		url:'customers?filter=available',
 		type:'get',
 		success: function(gridData){
 			$("#customerjqGrid").jqGrid('setGridParam', { data: gridData}).trigger('reloadGrid');

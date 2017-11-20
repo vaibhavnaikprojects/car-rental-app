@@ -5,42 +5,40 @@ public class Car {
 	private String model;
 	private int year;
 	private String vehicleNo;
-	private String carType;
-	private double dailyRate;
-	private double weeklyRate;
+	private CarType carType;
 	private String status;
 	private String leavingDate;
 	private String joiningDate;
-	public Car() {
-		super();
-	}
+	private Owner owner;
 	
-	public Car(int vehicleId, String model, double year, String vehicleNo, String carType, double dailyRate,
-			double weeklyRate, String status) {
+	public Car(int vehicleId, String model, Double year, String vehicleNo, CarType carType, String status,
+			String leavingDate, String joiningDate, Owner owner) {
 		super();
 		this.vehicleId = vehicleId;
 		this.model = model;
-		this.year = ((Double)year).intValue();
+		this.year = year.intValue();
 		this.vehicleNo = vehicleNo;
 		this.carType = carType;
-		this.dailyRate = dailyRate;
-		this.weeklyRate = weeklyRate;
 		this.status = status;
+		this.leavingDate = leavingDate;
+		this.joiningDate = joiningDate;
+		this.owner = owner;
 	}
-
-	public Car(int vehicleId,String model, double year, String vehicleNo, String carType, double dailyRate, double weeklyRate,
-			String status,String joiningDate,String leavingDate) {
+	public Car(int vehicleId, String model, int year, String vehicleNo, CarType carType, String status,
+			String leavingDate, String joiningDate, Owner owner) {
 		super();
-		this.vehicleId=vehicleId;
+		this.vehicleId = vehicleId;
 		this.model = model;
-		this.year = ((Double)year).intValue();
+		this.year = year;
 		this.vehicleNo = vehicleNo;
 		this.carType = carType;
-		this.dailyRate = dailyRate;
-		this.weeklyRate = weeklyRate;
 		this.status = status;
-		this.joiningDate=joiningDate;
-		this.leavingDate=leavingDate;
+		this.leavingDate = leavingDate;
+		this.joiningDate = joiningDate;
+		this.owner = owner;
+	}
+	public Car() {
+		super();
 	}
 	public int getVehicleId() {
 		return vehicleId;
@@ -66,23 +64,11 @@ public class Car {
 	public void setVehicleNo(String vehicleNo) {
 		this.vehicleNo = vehicleNo;
 	}
-	public String getCarType() {
+	public CarType getCarType() {
 		return carType;
 	}
-	public void setCarType(String carType) {
+	public void setCarType(CarType carType) {
 		this.carType = carType;
-	}
-	public double getDailyRate() {
-		return dailyRate;
-	}
-	public void setDailyRate(double dailyRate) {
-		this.dailyRate = dailyRate;
-	}
-	public double getWeeklyRate() {
-		return weeklyRate;
-	}
-	public void setWeeklyRate(double weeklyRate) {
-		this.weeklyRate = weeklyRate;
 	}
 	public String getStatus() {
 		return status;
@@ -102,10 +88,18 @@ public class Car {
 	public void setJoiningDate(String joiningDate) {
 		this.joiningDate = joiningDate;
 	}
+	public Owner getOwner() {
+		return owner;
+	}
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
 	@Override
 	public String toString() {
 		return "Car [vehicleId=" + vehicleId + ", model=" + model + ", year=" + year + ", vehicleNo=" + vehicleNo
-				+ ", carType=" + carType + ", dailyRate=" + dailyRate + ", weeklyRate=" + weeklyRate + ", status="
-				+ status + ", leavingDate=" + leavingDate + ", joiningDate=" + joiningDate + "]";
+				+ ", carType=" + carType + ", status=" + status + ", leavingDate=" + leavingDate + ", joiningDate="
+				+ joiningDate + ", owner=" + owner + "]";
 	}
+	
+	
 }

@@ -35,21 +35,6 @@
 			      				<div class="panel-heading">Rent Info</div>
 			  					<div class="panel-body" style="height: 400px">
 			  						<div class="form-horizontal">
-										<div class="form-group"><div class="col-sm-12">
-									      		<input type="text" class="form-control" id="customerName" name="customerName" placeholder="Customer Name"/>
-									    </div></div>
-									    <div class="form-group">
-									    	<div class="col-sm-12">
-									      		<select class="form-control" id="customerType" name="customerType">
-									      			<option value="" selected="selected" disabled="disabled">Customer Type</option>
-												    <option value="Individual">Individual</option>
-												    <option value="Company">Company</option>
-												</select>
-									    	</div>
-									  	</div>
-										<div class="form-group"><div class="col-sm-12">
-									      		<input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Customer Phone"/>
-									    </div></div>
 									    <div class="form-group">
 									    	<div class="col-sm-12">
 									      		<select class="form-control" id="rentalType" name="rentalType">
@@ -119,8 +104,12 @@
 				console.log(data);
 				$('#customerProcessing').hide();
 				for(var i=0;i<data.length;i++){
-					$('#customerList').append('<a href="#" class="list-group-item"><span class="badge">'+data[i].customerType+'</span>'+data[i].name+'</a>');
+					$('#customerList').append('<a href="#" class="list-group-item customerItems"><span class="badge">'+data[i].customerType+'</span>'+data[i].name+'</a>');
 				}
+				$('.customerItems').on('click',function(){
+					$('.customerItems').removeClass('active');
+					$(this).addClass('active');
+				});
 			}
 		});
 		$.ajax({
@@ -130,14 +119,19 @@
 				console.log(data);
 				$('#carProcessing').hide();
 				for(var i=0;i<data.length;i++){
-					$('#carList').append('<a href="#" class="list-group-item">'+
+					$('#carList').append('<a href="#" class="list-group-item carItems">'+
 						    '<div class="list-group-item-heading"><div class="row"><div class="col-lg-12"><h4 style="font-weight:bold">'+data[i].model+' <small>('+data[i].carType+')</small></h4></div></div></div>'+
-						    '<div class="list-group-item-text"><div class="row"><div class="col-lg-6">Year: '+data[i].year+'</div><div class="col-lg-6">Vehicle No: '+data[i].vehicleNo+'</div></div>'+
-						    '<div class="row"><div class="col-lg-6">Daily Rate: '+data[i].dailyRate+'</div><div class="col-lg-6">Weekly Rate: '+data[i].weeklyRate+'</div></div></div>'+
+						    '<div class="list-group-item-text"><div class="row"><div class="col-lg-4">Year: '+data[i].year+'</div><div class="col-lg-4">Vehicle No: '+data[i].vehicleNo+'</div><div class="col-lg-4">Owner: '+data[i].owner.name+'</div></div>'+
+						    '<div class="row"><div class="col-lg-4">Daily Rate: '+data[i].dailyRate+'</div><div class="col-lg-4">Weekly Rate: '+data[i].weeklyRate+'</div></div></div>'+
 						  '</a>');
 				}
+				$('.carItems').on('click',function(){
+					$('.carItems').removeClass('active');
+					$(this).addClass('active');
+				});
 			}
 		});
+
 	});
 	</script>
 </body>

@@ -12,6 +12,10 @@ public class Owner{
 		super();
 	}
 	
+	public Owner(String name) {
+		super();
+		this.name = name;
+	}
 	public Owner(int ownerId, String ownerType, String name, String address) {
 		super();
 		this.ownerId = ownerId;
