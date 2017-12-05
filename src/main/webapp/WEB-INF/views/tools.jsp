@@ -55,7 +55,7 @@
     							>Use System Data</a>
     						</div>
     						<div class="col-lg-3">
-    							<a href="#" id="downloadtemplate">Download Template</a>
+    							<a href="downloadtemplate" id="downloadtemplate">Download Template</a>
     						</div>
     					</div>
     				</div>

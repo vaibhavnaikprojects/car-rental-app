@@ -9,6 +9,10 @@ public class CarType {
 	public CarType() {
 		super();
 	}
+	public CarType(int carTypeId){
+		super();
+		this.carTypeId = carTypeId;
+	}
 	public CarType(String carType){
 		super();
 		this.carType = carType;

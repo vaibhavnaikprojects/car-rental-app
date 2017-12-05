@@ -61,15 +61,15 @@
 					</div>
 					<div id="eerDiagram" class="tab-pane fade">
 						<div class="panel panel-primary">
-		    				<div class="panel-body">
-		    					<img src="<c:url value="/resources/images/EER Diagram.css"/>"/>
+		    				<div class="panel-body" style="text-align: center;">
+		    					<img src="<c:url value="/resources/images/EER Diagram.jpg"/>" width="80%" height="90%" />
 		    				</div>
 		    			</div>
 					</div>
 					<div id="schemadiagram" class="tab-pane fade">
 						<div class="panel panel-primary">
 		    				<div class="panel-body">
-		    					<img src="<c:url value="/resources/images/schemaDiagram.css"/>"/>
+		    					<img src="<c:url value="/resources/images/schemaDiagram.jpg"/>" width="80%" height="70%"/>
 		    				</div>
 		    			</div>
 					</div>
@@ -80,85 +80,128 @@
 		    					<div class="row">
 		    						<div class="col-lg-6">
 		    							<div class="panel panel-primary">
+		    								<div class="panel-heading">Customer Type</div>
+		    								<div class="panel-body">
+		    									CREATE TABLE CUSTOMERTYPE(<br/>
+													customerTypeId INT NOT NULL AUTO_INCREMENT,<br/>
+													customerType VARCHAR(10) NOT NULL,<br/>
+													CONSTRAINT PK_CUSTOMERTYPE PRIMARY KEY (customerTypeId)<br/>
+												);
+		    								</div>
+		    							</div>
+		    							<div class="panel panel-primary">
 		    								<div class="panel-heading">Customer</div>
 		    								<div class="panel-body">
-		    									CREATE TABLE Customer(
-												id INT NOT NULL AUTO_INCREMENT,
-												name VARCHAR(50) NOT NULL,
-												customerType VARCHAR(10) NOT NULL,
-												phone VARCHAR(12) NOT NULL,
-												status VARCHAR(50) NOT NULL,
-												joiningDate DATE,
-												leavingDate DATE,
-												CONSTRAINT PK_CUSTOMER PRIMARY KEY (`id`));
+		    									CREATE TABLE CUSTOMER(<br/>
+													id INT NOT NULL AUTO_INCREMENT,<br/>
+													name VARCHAR(50) NOT NULL,<br/>
+													customerTypeId INT NOT NULL,<br/>
+													phone VARCHAR(12) NOT NULL,<br/>
+													status VARCHAR(10) NOT NULL,<br/>
+													joiningDate DATE,<br/>
+													leavingDate DATE,<br/>
+													CONSTRAINT PK_CUSTOMER PRIMARY KEY(id),<br/>
+													CONSTRAINT FK_CUSTOMER_CUSTOMERTYPE FOREIGN KEY(customerTypeId) REFERENCES CUSTOMERTYPE(customerTypeId) ON UPDATE CASCADE ON DELETE CASCADE<br/>
+												);
 		    								</div>
 		    							</div>
-		    						</div>
-		    						<div class="col-lg-6">
 		    							<div class="panel panel-primary">
-		    								<div class="panel-heading">Owner</div>
+		    								<div class="panel-heading">Car Type Table</div>
 		    								<div class="panel-body">
-		    									CREATE TABLE Owner(
-												ownerId INT NOT NULL AUTO_INCREMENT,
-												ownerType VARCHAR(50) NOT NULL,
-												name VARCHAR(50) NOT NULL,
-												address VARCHAR(200) NOT NULL,
-												status VARCHAR(50) NOT NULL,
-												joiningDate DATE,
-												leavingDate DATE,
-												CONSTRAINT PK_OWNER PRIMARY KEY (`ownerId`));
+		    									CREATE TABLE CARTYPE(<br/>
+													carTypeId INT NOT NULL AUTO_INCREMENT,<br/>
+													carType VARCHAR(20) NOT NULL,<br/>
+													dailyRate DOUBLE NOT NULL,<br/>
+													weeklyRate DOUBLE NOT NULL,<br/>
+													CONSTRAINT PK_CARTYPE PRIMARY KEY(carTypeId)<br/>
+												);
 		    								</div>
 		    							</div>
-		    						</div>
-		    					</div>
-		    					<div class="row">
-		    						<div class="col-lg-6">
 		    							<div class="panel panel-primary">
 		    								<div class="panel-heading">Car Table</div>
 		    								<div class="panel-body">
-		    									CREATE TABLE Car(
-												vehicleId INT NOT NULL AUTO_INCREMENT,
-												model VARCHAR(50) NOT NULL,
-												year INT NOT NULL,
-												vehicleNo VARCHAR(50) NOT NULL,
-												carType VARCHAR(50) NOT NULL,
-												dailyRate DOUBLE,
-												weeklyRate DOUBLE,
-												status VARCHAR(50) NOT NULL,
-												joiningDate DATE,
-												leavingDate DATE,
-												ownerId INT NOT NULL,
-												CONSTRAINT 'PK_VEHICLE' PRIMARY KEY ('vehicleId'),
-												CONSTRAINT 'FK_CAR_OWNER' FOREIGN KEY ('ownerId') REFERENCES owner('ownerId') ON UPDATE CASCADE ON DELETE CASCADE);
+		    									CREATE TABLE CAR(<br/>
+													vehicleId INT NOT NULL AUTO_INCREMENT,<br/>
+													model VARCHAR(50) NOT NULL,<br/>
+													year INT NOT NULL,<br/>
+													vehicleNo VARCHAR(50) NOT NULL,<br/>
+													carTypeId INT NOT NULL,<br/>
+													status VARCHAR(10) NOT NULL,<br/>
+													joiningDate DATE,<br/>
+													leavingDate DATE,<br/>
+													rentalLocation VARCHAR(50) NOT NULL,<br/>
+													ownerId INT NOT NULL,<br/>
+													CONSTRAINT PK_CAR PRIMARY KEY (vehicleId),<br/>
+													CONSTRAINT FK_CAR_CARTYPE FOREIGN KEY(carTypeId) REFERENCES CARTYPE(carTypeId) ON UPDATE CASCADE ON DELETE CASCADE,<br/>
+													CONSTRAINT FK_CAR_OWNER FOREIGN KEY(ownerId) REFERENCES OWNER(ownerId) ON UPDATE CASCADE ON DELETE CASCADE<br/>
+												);
+
 		    								</div>
 		    							</div>
 		    						</div>
 		    						<div class="col-lg-6">
 		    							<div class="panel panel-primary">
+		    								<div class="panel-heading">Owner Type Table</div>
+		    								<div class="panel-body">
+		    									CREATE TABLE OWNERTYPE(<br/>
+													ownerTypeId INT NOT NULL AUTO_INCREMENT,<br/>
+													ownerType VARCHAR(50) NOT NULL,<br/>
+													CONSTRAINT PK_CUSTOMERTYPE PRIMARY KEY(ownerTypeId)<br/>
+												);
+		    								</div>
+		    							</div>
+		    							<div class="panel panel-primary">
+		    								<div class="panel-heading">Owner Table</div>
+		    								<div class="panel-body">
+		    									CREATE TABLE OWNER(<br/>
+													ownerId INT NOT NULL AUTO_INCREMENT,<br/>
+													ownerTypeId INT NOT NULL,<br/>
+													name VARCHAR(50) NOT NULL,<br/>
+													address VARCHAR(200) NOT NULL,<br/>
+													status VARCHAR(10) NOT NULL,<br/>
+													joiningDate DATE,<br/>
+													leavingDate DATE,<br/>
+													CONSTRAINT PK_OWNER PRIMARY KEY(ownerId),<br/>
+													CONSTRAINT FK_OWNER_OWNERTYPE FOREIGN KEY (ownerTypeId) REFERENCES OWNERTYPE(ownerTypeId) ON UPDATE CASCADE ON DELETE CASCADE<br/>
+												);
+		    								</div>
+		    							</div>
+		    							<div class="panel panel-primary">
+		    								<div class="panel-heading">Rental Type Table</div>
+		    								<div class="panel-body">
+		    									CREATE TABLE RENTALTYPE(<br/>
+													rentalTypeId INT NOT NULL AUTO_INCREMENT,<br/>
+													rentalType VARCHAR(20) NOT NULL,<br/>
+													CONSTRAINT PK_RENTALTYPE PRIMARY KEY(rentalTypeId)<br/>
+												);
+		    								</div>
+		    							</div>
+		    							<div class="panel panel-primary">
 		    								<div class="panel-heading">Rental Table</div>
 		    								<div class="panel-body">
-		    									CREATE TABLE rental(
-												rentalId INT NOT NULL AUTO_INCREMENT,
-												customerId INT NOT NULL,
-												vehicleId INT NOT NULL,
-												ownerId INT NOT NULL,
-												startDate DATE NOT NULL,
-												endDate DATE NOT NULL,
-												rentalType VARCHAR(50) NOT NULL,
-												noOfRentalType INT NOT NULL DEFAULT '0',
-												amountDue DOUBLE NULL DEFAULT '0',
-												status VARCHAR(50) NOT NULL,
-												createdDate DATE NOT NULL,
-												closingDate DATE NULL,
-												CONSTRAINT 'PK_RENTAL' PRIMARY KEY ('rentalId'),
-												CONSTRAINT 'FK_RENTAL_CUSTOMER' FOREIGN KEY ('customerId') REFERENCES customer('id') ON UPDATE CASCADE ON DELETE NO ACTION,
-												CONSTRAINT 'FK_RENTAL_CAR' FOREIGN KEY ('vehicleId') REFERENCES car('vehicleId') ON UPDATE CASCADE ON DELETE NO ACTION,
-												CONSTRAINT 'FK_RENTAL_OWNER' FOREIGN KEY ('ownerId') REFERENCES owner('ownerId') ON UPDATE CASCADE ON DELETE NO ACTION);
+		    									CREATE TABLE RENTAL(<br/>
+													rentalId INT NOT NULL AUTO_INCREMENT,<br/>
+													startDate DATE NOT NULL,<br/>
+													endDate DATE NOT NULL,<br/>
+													noOfRentalType INT NOT NULL DEFAULT 0,<br/>
+													amountDue DOUBLE NULL DEFAULT 0,<br/>
+													status VARCHAR(10) NOT NULL,<br/>
+													createdDate DATE NOT NULL,<br/>
+													closingDate DATE NULL,<br/>
+													rentalTypeId INT NOT NULL,<br/>
+													vehicleId INT NOT NULL,<br/>
+													ownerId INT NOT NULL,<br/>
+													customerId INT NOT NULL,<br/>
+													CONSTRAINT PK_RENTAL PRIMARY KEY (rentalId),<br/>
+													CONSTRAINT FK_RENTAL_RENTALTYPE FOREIGN KEY (rentalTypeId) REFERENCES RENTALTYPE(rentalTypeId) ON UPDATE CASCADE ON DELETE NO ACTION,<br/>
+													CONSTRAINT FK_RENTAL_CUSTOMER FOREIGN KEY (customerId) REFERENCES CUSTOMER(id) ON UPDATE CASCADE ON DELETE NO ACTION,<br/>
+													CONSTRAINT FK_RENTAL_CAR FOREIGN KEY (vehicleId) REFERENCES CAR(vehicleId) ON UPDATE CASCADE ON DELETE NO ACTION,<br/>
+													CONSTRAINT FK_RENTAL_OWNER FOREIGN KEY (ownerId) REFERENCES OWNER(ownerId) ON UPDATE CASCADE ON DELETE NO ACTION<br/>
+												);
 		    								</div>
 		    							</div>
 		    						</div>
-		    					</div>
-		    					
+		    					</div>	
 		    				</div>
 		    			</div>
 					</div>

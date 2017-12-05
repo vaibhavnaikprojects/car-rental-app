@@ -47,6 +47,3 @@ $('#systemdataset').confirmation({
 		});
 	}
 });
-$('#downloadtemplate').on('click',function(){
-
-});

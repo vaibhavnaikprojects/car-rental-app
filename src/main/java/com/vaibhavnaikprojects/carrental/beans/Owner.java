@@ -11,9 +11,18 @@ public class Owner{
 	public Owner() {
 		super();
 	}
-	
+	public Owner(int ownerId) {
+		super();
+		this.ownerId = ownerId;
+	}
 	public Owner(String name) {
 		super();
+		this.name = name;
+	}
+	
+	public Owner(int ownerId, String name) {
+		super();
+		this.ownerId = ownerId;
 		this.name = name;
 	}
 	public Owner(int ownerId, String ownerType, String name, String address) {

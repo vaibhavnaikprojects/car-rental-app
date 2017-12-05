@@ -7,6 +7,9 @@ public class CustomerType {
 	public CustomerType() {
 		super();
 	}
+	public CustomerType(int customerTypeId) {
+		this.customerTypeId=customerTypeId;
+	}
 	public CustomerType(int customerTypeId, String customerType) {
 		super();
 		this.customerTypeId = customerTypeId;

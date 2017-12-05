@@ -92,7 +92,7 @@ public class ToolsDaoServiceImpl extends JdbcDaoSupport{
 				ps.setString(3, customer.getPhone());
 			}
 		});
-		final List<CarType> carTypes=(List<CarType>)excelSheetObj.get("carType");
+		final List<CarType> carTypes=(List<CarType>)excelSheetObj.get("carTypes");
 		getJdbcTemplate().batchUpdate(CarQueries.INSERT_CAR_TYPE, new BatchPreparedStatementSetter() {
 			@Override
 			public int getBatchSize() {

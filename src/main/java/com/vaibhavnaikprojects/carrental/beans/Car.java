@@ -11,6 +11,16 @@ public class Car {
 	private String joiningDate;
 	private Owner owner;
 	
+	public Car(int vehicleId) {
+		super();
+		this.vehicleId = vehicleId;
+	}
+	public Car(int vehicleId, String model, int year, String vehicleNo) {
+		this.vehicleId = vehicleId;
+		this.model = model;
+		this.year = year;
+		this.vehicleNo = vehicleNo;
+	}	
 	public Car(int vehicleId, String model, Double year, String vehicleNo, CarType carType, String status,
 			String leavingDate, String joiningDate, Owner owner) {
 		super();

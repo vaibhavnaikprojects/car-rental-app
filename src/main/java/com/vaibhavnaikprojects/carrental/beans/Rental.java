@@ -12,6 +12,21 @@ public class Rental {
 	private double amountDue;
 	public Rental() {
 	}
+
+	public Rental(int rentalId, String rentalType, Customer customer, Car car, Owner owner, int noOfRentalType,
+			String startDate, String returnDate, double amountDue) {
+		super();
+		this.rentalId = rentalId;
+		this.rentalType = rentalType;
+		this.customer = customer;
+		this.car = car;
+		this.owner = owner;
+		this.noOfRentalType = noOfRentalType;
+		this.startDate = startDate;
+		this.returnDate = returnDate;
+		this.amountDue = amountDue;
+	}
+
 	public int getRentalId() {
 		return rentalId;
 	}

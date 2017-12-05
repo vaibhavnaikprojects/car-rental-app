@@ -63,15 +63,13 @@ public class ToolController {
 	}
 	
 	@RequestMapping(value = "/downloadtemplate", method = RequestMethod.GET)
-	@ResponseBody public String downloadtemplate(HttpServletResponse response) {
-		String msg="success";
+	public void downloadtemplate(HttpServletResponse response) {
 		try {
 		File file=new ClassPathResource("/DBTemplate.xlsx").getFile();
 		filedownloader.downloadFile(file, response, "DBTemplate.xlsx");
 		} catch (IOException e) {
-			msg="error: "+e.getMessage();
+			e.printStackTrace();
 		}
-		return msg;
 	}
 	
 

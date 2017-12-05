@@ -1,57 +1,35 @@
 $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-    $('#startDatetimepicker').datetimepicker({
-    	format: 'MM/DD/YYYY',
-    	minDate:new Date()
-    }).on('dp.change', function (selected) {
-    	$('#endDatetimepicker').data("DateTimePicker").minDate(selected.date);
-    });
-    $('#endDatetimepicker').datetimepicker({
-    	format: 'MM/DD/YYYY'
-    }).on('dp.change', function (selected) {
-    	if($('#startDate').val()!=""){
-    		var start= $('#startDatetimepicker').data('DateTimePicker').date();
-    	    var end= $('#endDatetimepicker').data('DateTimePicker').date();
-    	    var timeDiff = 0
-    	    if (end) {
-    	        timeDiff = (end - start) / 1000;
-    	    }
-    	    var days = Math.floor(timeDiff / (60 * 60 * 24));
-    	    $('#noOfRentalType').val(days);
-    	    if($('#rentalType').val()==null){
-    			if(days>=7)
-    				$('#rentalType').val('Weekly')
-    			else
-    				$('#rentalType').val('Daily')	
-    		}
-    		if($('#rentalType').val()=='Weekly'){
-    			$('#noOfRentalType').val((days/7));
-    		}
-    		else{
-    			$('#noOfRentalType').val(days+1);
-    		}
-    		
-    	}
-    })
+	$('[data-toggle="tooltip"]').tooltip();
+	$('#startDatetimepicker').datetimepicker({
+		format: 'MM/DD/YYYY',
+		minDate:new Date()
+	})
+	$('#endDatetimepicker').datetimepicker({
+		format: 'MM/DD/YYYY'
+	});
+	$('#applicationDate').datetimepicker({
+		format: 'MM/DD/YYYY'
+	});
+	$.ajax({
+		url:'customers?filter=active',
+		type:'get',
+		success: function(data){
+			console.log(data);
+			$('#customerProcessing').hide();
+			for(var i=0;i<data.length;i++){
+				$('#customerList').append('<a href="#" id="'+data[i].id+'" class="list-group-item customerItems"><span class="badge">'+data[i].customerType+'</span>'+data[i].name+'</a>');
+			}
+			$('.customerItems').on('click',function(){
+				$('.customerItems').removeClass('active');
+				$(this).addClass('active');
+			});
+		},
+		error:function(){
+			$('#customerProcessing').hide();
+		}
+	});
 });
 function navigation(page){
 	location.href=page;
 }
 
-
-
-function readURL(input) {
-
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#imagePreview').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-$("#slideImage").change(function(){
-    readURL(this);
-});
