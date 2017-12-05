@@ -20,7 +20,7 @@
     					</div>
     					<div class="form-group">
 							<div class="col-sm-12">
-								<div class='input-group date' id='carTypeStartDatetimepicker'>
+								<div class='input-group date' id='ownerCarStartDatetimepicker'>
 									<input type="text" class="form-control" id="ownercarTypeStartDate" name="carTypeStartDate" placeholder="Start Date" />
 									<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
@@ -28,7 +28,7 @@
 						</div>
     					<div class="form-group">
 							<div class="col-sm-12">
-								<div class='input-group date' id='carTypeEndDatetimepicker'>
+								<div class='input-group date' id='ownerCarEndDatetimepicker'>
 									<input type="text" class="form-control" id="ownercarTypeEndDate" name="carTypeEndDate" placeholder="End Date" readonly="readonly" />
 									<span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span>
 								</div>
@@ -43,7 +43,12 @@
     			<div class="panel panel-primary" style="height: 400px">
     				<div class="panel-heading">Details</div>
     				<div class="panel-body">
-    					
+    					<div class="col-lg-9">
+    							<div id="carOwnerList" class="list-group"></div>
+    					</div>
+    					<div class="col-lg-3">
+    						<h4 id="carOwnerTotalAmount"></h4>
+    					</div>
     				</div>
     			</div>
     		</div>

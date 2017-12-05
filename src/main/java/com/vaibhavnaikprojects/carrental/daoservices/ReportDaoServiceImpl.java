@@ -12,15 +12,14 @@ import com.vaibhavnaikprojects.carrental.queries.RentalQueries;
 @Repository
 public class ReportDaoServiceImpl extends JdbcDaoSupport{
 
-	public List<Rental> ownerCarReport(int ownerId, int carId) {
-		return getJdbcTemplate().query(RentalQueries.OWNER_CAR_REPORT,new Object[] {ownerId,carId},new RentalMapper());
+	public List<Rental> ownerCarReport(String startDate,String endDate,int ownerId, int carId) {
+		return getJdbcTemplate().query(RentalQueries.OWNER_CAR_REPORT,new Object[] {startDate,endDate,carId,ownerId},new RentalMapper());
 	}
-	public List<Rental> carTypeReport(int carTypeId) {
-		return getJdbcTemplate().query(RentalQueries.CAR_TYPE_REPORT,new Object[] {carTypeId},new RentalMapper());
-	}
-
-	public List<Rental> ownerReport(int ownerId) {
-		return getJdbcTemplate().query(RentalQueries.OWNER_REPORT,new Object[] {ownerId},new RentalMapper());
+	public List<Rental> carTypeReport(String startDate,String endDate,int carTypeId) {
+		return getJdbcTemplate().query(RentalQueries.CAR_TYPE_REPORT,new Object[] {startDate,endDate,carTypeId},new RentalMapper());
 	}
 
+	public List<Rental> ownerReport(String startDate,String endDate,int ownerId) {
+		return getJdbcTemplate().query(RentalQueries.OWNER_REPORT,new Object[] {startDate,endDate,ownerId},new RentalMapper());
+	}
 }

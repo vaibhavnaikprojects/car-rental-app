@@ -59,14 +59,17 @@
 				}
 			}
 		});
-		$('#ownerCars').on('select',function(){
+		$('#ownerCars').on('change',function(){
 			ownerId=$('#ownerCars').val();
 			console.log(ownerId);
+			$('#cars').html('');
 			$.ajax({
 				url:'ownercars?ownerId='+ownerId,
 				type:'get',
 				success: function(gridData){
-					$('#ownerCars').append('<option value="'+gridData[i].vehicleId+'">'+gridData[i].model+'</option');
+					console.log(gridData);
+					for(var i=0;i<gridData.length;i++)
+						$('#cars').append('<option value="'+gridData[i].vehicleId+'">'+gridData[i].model+'</option');
 				}
 			});
 		});
@@ -96,32 +99,97 @@
 		$('#ownerCarEndDatetimepicker').datetimepicker({
 			format: 'MM/DD/YYYY'
 		});
-		$('#carTypeStartDatetimepicker').on('dp.change',function(){
+		$('#carTypeReport').on('click',function(){
 			var sDate = new Date($('#carTypeStartDate').val());
 			var resultDate= new Date();
-			resultDate.setDate(sDate.getDate() + 7);
+			resultDate.setDate(sDate.getDate() + parseInt(7));
 			$('#carTypeEndDate').datetimepicker({
 			    date: resultDate,
 			    format: 'MM/DD/YYYY'
 			});
-			
+			$('#carTypeTotalAmount').html('');
+			$('#carTypeList').html('');
+			$.ajax({
+				url: 'carTypeReport?startDate='+$('#carTypeStartDate').val()+'&endDate='+$('#carTypeEndDate').val()+'&carTypeId='+$('#carTypes').val(),
+				type: 'GET',
+				success: function(data){
+					console.log(data);
+					var amount=0;
+					for(var i=0;i<data.length;i++){
+						$('#carTypeList').append('<a href="#" id="'+data[i].vehicleId+'" class="list-group-item carItems">'+
+								'<div class="list-group-item-heading"><div class="row"><div class="col-lg-12"><h4 style="font-weight:bold">'+data[i].car.model+' <span style="font-size:10px">('+data[i].car.vehicleNo+')</span></h4></div></div></div>'+
+								'<div class="list-group-item-text"><div class="row"><div class="col-lg-4">Rental Duration: '+data[i].noOfRentalType+'</div><div class="col-lg-4">Rental Type: '+data[i].rentalType+'</div><div class="owner" id="'+data[i].owner.ownerId+'" class="col-lg-4">Owner: '+data[i].owner.name+'</div></div>'+
+								'<div class="row"><div class="col-lg-4 dailyRate">Amount: '+data[i].amountDue+'</div><div class="col-lg-4 weeklyRate">Dates: '+data[i].startDate+' - '+data[i].returnDate+'</div></div></div>'+
+						'</a>');
+						amount+=data[i].amountDue;
+					}
+					$('#carTypeTotalAmount').html("Total Amount: "+amount);
+				},
+				error: function(){
+					
+				}
+			});
 		});
-		$('#ownerStartDatetimepicker').on('dp.change',function(){
+		$('#ownerReport').on('click',function(){
 			var sDate = new Date($('#ownerStartDate').val());
 			var resultDate= new Date();
-			resultDate.setDate(sDate.getDate() + 7);
+			resultDate.setDate(sDate.getDate() + parseInt(7));
 			$('#ownerEndDate').datetimepicker({
 			    date: resultDate,
 			    format: 'MM/DD/YYYY'
-			});		
+			});
+			$('#ownerList').html('');
+			$('#ownerTotalAmount').html('');
+			$.ajax({
+				url: 'ownerReport?startDate='+$('#ownerStartDate').val()+'&endDate='+$('#ownerEndDate').val()+'&ownerId='+$('#owners').val(),
+				type: 'GET',
+				success: function(data){
+					console.log(data);
+					var totalOwnner=0;
+					for(var i=0;i<data.length;i++){
+						$('#ownerList').append('<a href="#" id="'+data[i].vehicleId+'" class="list-group-item carItems">'+
+								'<div class="list-group-item-heading"><div class="row"><div class="col-lg-12"><h4 style="font-weight:bold">'+data[i].car.model+' <span style="font-size:10px">('+data[i].car.vehicleNo+')</span></h4></div></div></div>'+
+								'<div class="list-group-item-text"><div class="row"><div class="col-lg-4">Rental Duration: '+data[i].noOfRentalType+'</div><div class="col-lg-4">Rental Type: '+data[i].rentalType+'</div><div class="owner" id="'+data[i].owner.ownerId+'" class="col-lg-4">Owner: '+data[i].owner.name+'</div></div>'+
+								'<div class="row"><div class="col-lg-4 dailyRate">Amount: '+data[i].amountDue+'</div><div class="col-lg-4 weeklyRate">Dates: '+data[i].startDate+' - '+data[i].returnDate+'</div></div></div>'+
+						'</a>');
+						totalOwnner+=data[i].amountDue;
+					}
+					$('#ownerTotalAmount').html('Total Amount: '+totalOwnner);
+				},
+				error: function(){
+					
+				}
+			});
 		});
-		$('#carTypeStartDatetimepicker').on('dp.change',function(){
+		$('#ownerCarReport').on('click',function(){
 			var sDate = new Date($('#ownercarTypeStartDate').val());
 			var resultDate= new Date();
-			resultDate.setDate(sDate.getDate() + 7);
+			resultDate.setDate(sDate.getDate() + parseInt(7));
 			$('#ownercarTypeEndDate').datetimepicker({
 			    date: resultDate,
 			    format: 'MM/DD/YYYY'
+			});
+			$('#carOwnerList').html('');
+			$('#carOwnerTotalAmount').html('');
+			$.ajax({
+				url: 'ownerCarReport?startDate='+$('#ownercarTypeStartDate').val()+'&endDate='+$('#ownercarTypeEndDate').val()+'&ownerId='+$('#ownerCars').val()+'&carId='+$('#cars').val(),
+				type: 'GET',
+				success: function(data){
+					console.log(data);
+					var amount=0;
+					for(var i=0;i<data.length;i++){
+						$('#carOwnerList').append('<a href="#" id="'+data[i].vehicleId+'" class="list-group-item carItems">'+
+								'<div class="list-group-item-heading"><div class="row"><div class="col-lg-12"><h4 style="font-weight:bold">'+data[i].car.model+' <span style="font-size:10px">('+data[i].car.vehicleNo+')</span></h4></div></div></div>'+
+								'<div class="list-group-item-text"><div class="row"><div class="col-lg-4">Rental Duration: '+data[i].noOfRentalType+'</div><div class="col-lg-4">Rental Type: '+data[i].rentalType+'</div><div class="owner" id="'+data[i].owner.ownerId+'" class="col-lg-4">Owner: '+data[i].owner.name+'</div></div>'+
+								'<div class="row"><div class="col-lg-4 dailyRate">Amount: '+data[i].amountDue+'</div><div class="col-lg-4 weeklyRate">Dates: '+data[i].startDate+' - '+data[i].returnDate+'</div></div></div>'+
+						'</a>');
+						amount+=data[i].amountDue;
+					}
+					$('#carOwnerTotalAmount').html('Total Amount: '+amount);
+				},
+				error: function(){
+					
+				}
 			});
 		});
 	});

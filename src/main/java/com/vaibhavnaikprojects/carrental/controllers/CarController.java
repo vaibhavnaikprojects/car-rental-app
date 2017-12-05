@@ -102,10 +102,9 @@ public class CarController {
 		return "true";
 	}
 	@RequestMapping(value = "/ownercars", method = RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody public String ownercars(HttpServletRequest request){
+	@ResponseBody public List<Car> ownercars(HttpServletRequest request){
 		int ownerId=Integer.parseInt(request.getParameter("ownerId"));
-		catalogService.ownercars(ownerId);
-		return "true";
+		return catalogService.ownercars(ownerId);
 	}
 	
 }
